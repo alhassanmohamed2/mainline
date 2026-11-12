@@ -1,0 +1,157 @@
+.views {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.views button {
+  padding: 6px 12px 7px;
+  margin-bottom: -1px;
+  border-bottom: 3px solid transparent;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink-3);
+}
+
+.views button[aria-selected='true'] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.message {
+  padding: 8px 0;
+  font-size: 13.5px;
+  color: var(--ink-3);
+}
+
+.textarea {
+  width: 100%;
+  min-height: min(46dvh, 380px);
+  padding: 12px 14px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-m);
+  background: var(--term-bg);
+  color: var(--term-fg);
+  caret-color: var(--signal);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  resize: vertical;
+  tab-size: 4;
+  white-space: pre;
+  overflow: auto;
+}
+
+.textarea::placeholder {
+  color: var(--term-dim);
+}
+
+.textarea:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-m);
+}
+
+.footnote {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+.footnote code,
+.conflict code {
+  font-size: 0.92em;
+}
+
+.conflict {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--conflict);
+  border-radius: var(--radius-m);
+  background: var(--conflict-bg);
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.conflictButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.shortcut {
+  margin-right: auto;
+  align-self: center;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.error {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--wd);
+}
+
+.diffs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.diff {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.diffTitle {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 850;
+  color: var(--ink);
+}
+
+.diffTitle span {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-3);
+  margin-left: 4px;
+}
+
+.diffBody {
+  margin: 0;
+  padding: 10px 0;
+  border-radius: var(--radius-m);
+  background: var(--term-bg);
+  color: var(--term-fg);
+  font-size: 12.5px;
+  line-height: 1.55;
+  overflow-x: auto;
+}
+
+.diffBody span {
+  display: block;
+  padding: 0 14px;
+  min-width: max-content;
+}
+
+.diffBody [data-kind='header'] {
+  color: var(--term-dim);
+}
+
+.diffBody [data-kind='hunk'] {
+  color: var(--ansi-cyan);
+}
+
+.diffBody [data-kind='added'] {
+  color: var(--ansi-green);
+  background: color-mix(in srgb, var(--ansi-green) 12%, transparent);
+}
+
+.diffBody [data-kind='removed'] {
+  color: var(--ansi-red);
+  background: color-mix(in srgb, var(--ansi-red) 12%, transparent);
+}

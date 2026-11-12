@@ -1,0 +1,119 @@
+/*
+ * Design tokens. The look is borrowed from transit wayfinding: paper and ink,
+ * heavy signage type, and saturated colour reserved for things that carry
+ * meaning (a line on the map, the state of a file).
+ */
+:root {
+  --font-display: 'Overpass Variable', 'Overpass', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+
+  /* Neutrals */
+  --paper: #ebe6d9;
+  --panel: #f7f4ec;
+  --card: #fffdf7;
+  --ink: #18160f;
+  --ink-2: #4f4a3e;
+  --ink-3: #857e6e;
+  --rule: #d6cfbe;
+  --rule-soft: #e4dece;
+  --grid-dot: rgba(24, 22, 15, 0.13);
+
+  /* The one accent: signal yellow */
+  --signal: #ffc61a;
+  --signal-strong: #f0b400;
+  --on-signal: #18160f;
+  --focus: #1d5fd1;
+
+  /* File states, matching the colours git itself prints */
+  --wd: #c2301c;
+  --wd-bg: #fbe3dc;
+  --staged: #14753e;
+  --staged-bg: #dcf0e2;
+  --remote: #1d5fd1;
+  --remote-bg: #dfe8fa;
+  --conflict: #7a3fd1;
+  --conflict-bg: #ece2fb;
+  --danger: #c2301c;
+
+  /* Lines: chapter colours and map tracks */
+  --line-red: #d6372c;
+  --line-orange: #e56f17;
+  --line-yellow: #d99e00;
+  --line-green: #1f8a4c;
+  --line-teal: #0b8a92;
+  --line-blue: #2163d6;
+  --line-purple: #7a48c7;
+  --line-pink: #cf3f8a;
+  --ghost: #a9a290;
+
+  /* The terminal is a dark departure board in both themes */
+  --term-bg: #15130e;
+  --term-raised: #211e17;
+  --term-rule: #35312a;
+  --term-fg: #ece6d6;
+  --term-dim: #958e7c;
+  --ansi-red: #ff7b6b;
+  --ansi-green: #6fd08c;
+  --ansi-yellow: #f2c94c;
+  --ansi-blue: #7fb0ff;
+  --ansi-magenta: #d79bf5;
+  --ansi-cyan: #62d2d6;
+  --ansi-white: #ece6d6;
+  --ansi-gray: #958e7c;
+
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 12px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-overlay: 0 24px 60px -20px rgba(24, 22, 15, 0.45), 0 2px 0 rgba(24, 22, 15, 0.06);
+}
+
+:root[data-theme='dark'] {
+  --paper: #0f0e0b;
+  --panel: #181610;
+  --card: #201d16;
+  --ink: #efe9da;
+  --ink-2: #bab3a2;
+  --ink-3: #7f7969;
+  --rule: #353128;
+  --rule-soft: #2a2720;
+  --grid-dot: rgba(239, 233, 218, 0.1);
+
+  --signal: #ffc61a;
+  --signal-strong: #ffd451;
+  --focus: #7fb0ff;
+
+  --wd: #ff7b6b;
+  --wd-bg: #3a1a15;
+  --staged: #6fd08c;
+  --staged-bg: #14301f;
+  --remote: #7fb0ff;
+  --remote-bg: #172a4a;
+  --conflict: #c49bff;
+  --conflict-bg: #2c1f47;
+  --danger: #ff7b6b;
+
+  --line-red: #f0574b;
+  --line-orange: #f58a3a;
+  --line-yellow: #f2c230;
+  --line-green: #48b874;
+  --line-teal: #2fb5bd;
+  --line-blue: #5b93f5;
+  --line-purple: #a47be8;
+  --line-pink: #ea6aab;
+  --ghost: #5f5a4e;
+
+  --term-bg: #0a0907;
+  --term-raised: #17150f;
+  --term-rule: #2a2720;
+
+  --shadow-overlay: 0 24px 60px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(239, 233, 218, 0.08);
+}

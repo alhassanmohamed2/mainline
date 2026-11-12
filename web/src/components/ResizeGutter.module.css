@@ -1,0 +1,63 @@
+.gutter {
+  position: relative;
+  flex: none;
+  background: var(--rule);
+  transition: background-color 150ms var(--ease-out);
+  user-select: none;
+  touch-action: none;
+  z-index: 5;
+}
+
+.vertical {
+  width: 5px;
+  cursor: col-resize;
+  margin: 0 -2px;
+}
+
+.horizontal {
+  height: 5px;
+  cursor: row-resize;
+  margin: -2px 0;
+}
+
+.gutter:hover,
+.gutter:focus-visible,
+.gutter[data-dragging='true'] {
+  background: var(--signal);
+  outline: none;
+}
+
+.handle {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.vertical .handle::after {
+  content: '';
+  width: 3px;
+  height: 24px;
+  border-radius: 2px;
+  background: var(--ink-3);
+  opacity: 0.7;
+  transition: opacity 120ms;
+}
+
+.horizontal .handle::after {
+  content: '';
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--ink-3);
+  opacity: 0.7;
+  transition: opacity 120ms;
+}
+
+.gutter:hover .handle::after,
+.gutter[data-dragging='true'] .handle::after {
+  opacity: 1;
+  background: var(--on-signal);
+}

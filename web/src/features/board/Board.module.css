@@ -1,0 +1,666 @@
+.board {
+  container: board / inline-size;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-l);
+  overflow: hidden;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 8px 12px 8px 16px;
+  flex-wrap: wrap;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.filterWrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  height: 26px;
+  border-radius: 13px;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  color: var(--ink-3);
+}
+
+.filterInput {
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ink);
+  outline: none;
+  width: 90px;
+  transition: width 150ms var(--ease-out);
+}
+
+.filterInput:focus {
+  width: 130px;
+}
+
+.filterClear {
+  display: grid;
+  place-items: center;
+  color: var(--ink-3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.filterClear:hover {
+  color: var(--ink);
+}
+
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+  padding-top: 2px;
+}
+
+.newFile {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.newFileInput {
+  width: 150px;
+  height: 28px;
+  padding: 0 8px;
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  background: var(--card);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.operation {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 16px;
+  background: var(--conflict-bg);
+  border-block: 1.5px solid var(--conflict);
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.operation > span {
+  flex: none;
+  background: var(--conflict);
+  color: var(--card);
+}
+
+/* ---------------------------------- table --------------------------------- */
+
+.table {
+  --columns: minmax(84px, 0.8fr) repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 12px;
+}
+
+.columns,
+.row {
+  display: grid;
+  grid-template-columns: var(--columns);
+  column-gap: 14px;
+  align-items: center;
+}
+
+.columns {
+  align-items: start;
+  padding: 10px 0 6px;
+  border-top: 1px solid var(--rule);
+}
+
+.fileHeader {
+  padding-top: 3px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  min-width: 0;
+  transition: opacity 200ms;
+}
+
+/* Plates never spill into the next column */
+.column > span:first-child {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 18px;
+  letter-spacing: 0.06em;
+}
+
+.column[data-dim] {
+  opacity: 0.45;
+}
+
+.caption {
+  font-size: 11.5px;
+  color: var(--ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* The commands that move content between neighbouring columns. Each flow
+   spans from the middle of one column to the middle of the next. */
+.flows {
+  display: grid;
+  grid-template-columns: var(--columns);
+  column-gap: 14px;
+  padding-bottom: 6px;
+}
+
+.flows::before {
+  content: '';
+}
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  margin-left: 50%;
+  margin-right: -50%;
+  padding: 3px 0;
+  border-block: 1px dashed var(--rule);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.flowAction {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 1px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 120ms, transform 120ms;
+}
+
+.flowAction:hover {
+  background: var(--panel);
+  transform: scale(1.03);
+}
+
+.flow span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.forward {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.backward {
+  color: var(--ink-3);
+}
+
+.row {
+  min-height: 42px;
+  border-top: 1px solid var(--rule-soft);
+  animation: rise 240ms var(--ease-out);
+}
+
+.row[data-ignored] .fileName {
+  color: var(--ink-3);
+}
+
+.file {
+  min-width: 0;
+}
+
+.fileButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 4px 6px 4px 0;
+  border-radius: var(--radius-s);
+  text-align: left;
+}
+
+.fileName {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileEdit {
+  flex: none;
+  display: grid;
+  color: var(--ink-3);
+  opacity: 0;
+  transition: opacity 120ms;
+}
+
+.fileButton:hover .fileName,
+.fileButton:focus-visible .fileName {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.fileButton:hover .fileEdit,
+.fileButton:focus-visible .fileEdit {
+  opacity: 1;
+}
+
+.fileHeaderGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rowActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.rowActionBtn {
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  font-weight: 750;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: border-color 120ms, color 120ms, background-color 120ms;
+}
+
+.rowActionBtn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--card);
+}
+
+.rowActionBtn[data-action='stage'] {
+  border-color: var(--staged);
+  background: var(--staged-bg);
+  color: var(--staged);
+}
+
+.rowActionBtn[data-action='stage']:hover {
+  filter: brightness(0.95);
+}
+
+.rowActionBtn[data-action='unstage'] {
+  border-color: var(--rule);
+  background: var(--panel);
+  color: var(--ink-3);
+}
+
+.rowActionBtn[data-action='unstage']:hover {
+  border-color: var(--wd);
+  color: var(--wd);
+}
+
+.cell {
+  position: relative;
+  min-width: 0;
+  padding: 4px 0;
+}
+
+/* = or ≠ between two neighbouring trees */
+.versus {
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 14px;
+  transform: translateY(-52%);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink-3);
+  opacity: 0.55;
+}
+
+.versus[data-versus='differs'] {
+  color: var(--ink);
+  opacity: 1;
+}
+
+.ticket {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  height: 32px;
+  padding: 0 9px;
+  border-radius: 6px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  transition:
+    background-color 260ms,
+    border-color 260ms,
+    color 260ms;
+}
+
+.state {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding-top: 2px;
+}
+
+.oid {
+  flex: none;
+  font-size: 11.5px;
+  letter-spacing: 0.01em;
+}
+
+.none {
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.ticket[data-tone='none'] {
+  border: 1.5px dashed var(--rule);
+  justify-content: center;
+}
+
+.ticket[data-tone='clean'] {
+  border-color: var(--rule);
+  color: var(--ink-3);
+  justify-content: flex-end;
+}
+
+.ticket[data-tone='plain'] {
+  border-color: var(--rule);
+  color: var(--ink-2);
+}
+
+.ticket[data-tone='ignored'] {
+  border: 1.5px dashed var(--rule);
+  color: var(--ink-3);
+}
+
+.ticket[data-tone='wd'] {
+  background: var(--wd-bg);
+  border-color: var(--wd);
+  color: var(--wd);
+}
+
+.ticket[data-tone='staged'] {
+  background: var(--staged-bg);
+  border-color: var(--staged);
+  color: var(--staged);
+}
+
+.ticket[data-tone='conflict'] {
+  background: var(--conflict-bg);
+  border-color: var(--conflict);
+  color: var(--conflict);
+}
+
+/* A deletion: the file is gone from this tree */
+.ticket[data-tone='wd']:not([data-present]),
+.ticket[data-tone='staged']:not([data-present]) {
+  border-style: dashed;
+}
+
+.ticket[data-tone='wd']:not([data-present]) .state,
+.ticket[data-tone='staged']:not([data-present]) .state {
+  text-decoration: line-through;
+}
+
+.empty {
+  padding: 14px 0 6px;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 13.5px;
+  color: var(--ink-3);
+}
+
+.more {
+  align-self: flex-start;
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ------------------------------ stash + remote ---------------------------- */
+
+.shelf,
+.remote {
+  padding: 10px 16px;
+  border-top: 1.5px solid var(--ink);
+  font-size: 13px;
+}
+
+.shelf {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--panel);
+}
+
+.shelf ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--ink-2);
+}
+
+.shelf code {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.remote {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--remote-bg);
+}
+
+.remoteHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.remoteHead > span:first-child {
+  background: var(--remote);
+  color: var(--card);
+}
+
+.remoteName {
+  font-family: var(--font-display);
+  font-weight: 850;
+  padding-top: 2px;
+}
+
+.remoteLink,
+.remoteUrl {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--remote);
+  overflow-wrap: anywhere;
+}
+
+.track {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.end {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 9px;
+  border: 1.5px solid var(--remote);
+  border-radius: 6px;
+  background: var(--card);
+  white-space: nowrap;
+}
+
+.end code {
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.gap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+/* the line between the two ends */
+.gap::before {
+  content: '';
+  position: absolute;
+  inset: 50% -10px auto;
+  height: 3px;
+  transform: translateY(-50%);
+  background: var(--remote);
+  opacity: 0.35;
+}
+
+.track[data-synced] .gap::before {
+  opacity: 1;
+}
+
+.gap span {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: var(--remote-bg);
+  white-space: nowrap;
+}
+
+.gap span[data-active] {
+  background: var(--remote);
+  color: var(--card);
+  font-weight: 600;
+}
+
+.remoteStatus {
+  color: var(--ink-2);
+}
+
+/* ------------------------------ narrow boards ----------------------------- */
+
+.short {
+  display: none;
+}
+
+/* Too narrow for four columns: the file name moves onto its own line. */
+@container board (max-width: 520px) {
+  .table {
+    --columns: repeat(3, minmax(0, 1fr));
+    padding-inline: 12px;
+  }
+
+  .fileHeader,
+  .flows {
+    display: none;
+  }
+
+  .full {
+    display: none;
+  }
+
+  .short {
+    display: inline;
+  }
+
+  .row {
+    padding: 6px 0 4px;
+  }
+
+  .file {
+    grid-column: 1 / -1;
+  }
+
+  .ticket {
+    padding: 0 7px;
+  }
+
+  .state + .oid {
+    display: none;
+  }
+
+  .track {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .gap::before {
+    display: none;
+  }
+}

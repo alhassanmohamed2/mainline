@@ -1,0 +1,223 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 16px 20px;
+  background: color-mix(in srgb, var(--ink) 45%, transparent);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 150ms var(--ease-out);
+}
+
+.palette {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-overlay), 0 0 0 4px var(--signal);
+  overflow: hidden;
+  animation: slideDown 180ms var(--ease-out);
+}
+
+:global([data-theme='dark']) .palette {
+  border-color: var(--rule);
+  box-shadow: var(--shadow-overlay), 0 0 0 2px var(--signal);
+}
+
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--panel);
+  border-bottom: 1.5px solid var(--rule);
+}
+
+.searchIcon {
+  color: var(--ink-3);
+  flex: none;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--ink-3);
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.results {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 480px;
+  padding: 8px 0;
+}
+
+.sectionHeader {
+  padding: 8px 18px 4px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 9px 18px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 80ms;
+}
+
+.item[data-selected='true'] {
+  background: color-mix(in srgb, var(--signal) 24%, var(--panel));
+}
+
+.itemMain {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.bullet {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2.5px solid var(--bullet-color, var(--ink));
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 850;
+  color: var(--ink);
+}
+
+.itemText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.itemTitle {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 750;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemMeta {
+  font-size: 12px;
+  color: var(--ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemCommand {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.badge {
+  flex: none;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--rule-soft);
+  color: var(--ink-2);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 18px;
+  background: var(--panel);
+  border-top: 1.5px solid var(--rule);
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.footerHints {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.empty {
+  padding: 32px 18px;
+  text-align: center;
+  color: var(--ink-3);
+  font-size: 14px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

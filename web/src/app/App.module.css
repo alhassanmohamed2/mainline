@@ -1,0 +1,219 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Read, do, see: lesson | workbench | map */
+.columns {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: var(--lesson-width, 370px) auto minmax(0, 1fr) auto var(--map-width, 360px);
+}
+
+.lesson,
+.map {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.lesson > *,
+.map > * {
+  flex: 1;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  min-height: 0;
+  padding: 16px 18px 16px 16px;
+  /* drafting paper */
+  background-image: radial-gradient(circle, var(--grid-dot) 1.1px, transparent 1.3px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
+}
+
+.boardSlot {
+  flex: 1 1 auto;
+  min-height: 120px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  border-radius: var(--radius-l);
+}
+
+/* The terminal height is adjustable by dragging the separator */
+.stage > section:last-child {
+  flex: 0 0 var(--terminal-height, 260px);
+  min-height: 180px;
+}
+
+.stage > section:nth-child(2) {
+  flex: none;
+  margin-right: 4px;
+}
+
+.offline {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 7px 16px;
+  background: var(--wd-bg);
+  color: var(--ink);
+  border-bottom: 1.5px solid var(--wd);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.offline svg {
+  color: var(--wd);
+  flex: none;
+}
+
+/* Section switcher, only on narrower screens */
+.paneTabs {
+  display: none;
+  flex: none;
+  border-top: 1.5px solid var(--ink);
+  background: var(--card);
+}
+
+.paneTabs button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink-3);
+  border-top: 4px solid transparent;
+}
+
+.paneTabs button[aria-current] {
+  color: var(--ink);
+  border-top-color: var(--signal);
+}
+
+/* Two columns: the lesson stays, workbench and map take turns */
+@media (max-width: 1279px) {
+  .columns {
+    grid-template-columns: minmax(320px, var(--lesson-width, 370px)) auto minmax(0, 1fr);
+  }
+
+  .columns > [data-gutter='map'] {
+    display: none;
+  }
+
+  .map {
+    border-left: 0;
+  }
+
+  .app[data-pane='map'] .stage,
+  .app:not([data-pane='map']) .map {
+    display: none;
+  }
+
+  .paneTabs {
+    display: flex;
+  }
+
+  .paneTabs [data-pane-id='lesson'] {
+    display: none;
+  }
+
+  .app[data-pane='lesson'] .paneTabs [data-pane-id='stage'] {
+    color: var(--ink);
+    border-top-color: var(--signal);
+  }
+}
+
+/* One column: everything takes turns */
+@media (max-width: 859px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .columns > [role='separator'] {
+    display: none;
+  }
+
+  .lesson {
+    border-right: 0;
+  }
+
+  .app:not([data-pane='lesson']) .lesson,
+  .app:not([data-pane='stage']) .stage {
+    display: none;
+  }
+
+  .paneTabs [data-pane-id='lesson'] {
+    display: flex;
+  }
+
+  .app[data-pane='lesson'] .paneTabs [data-pane-id='stage'] {
+    color: var(--ink-3);
+    border-top-color: transparent;
+  }
+
+  .stage {
+    padding: 10px;
+    gap: 10px;
+    overflow-y: auto;
+  }
+
+  .boardSlot {
+    flex: none;
+    overflow: visible;
+  }
+
+  .stage > section:last-child {
+    flex: none;
+    height: 380px;
+  }
+}
+
+/* ------------------------------ before loading ---------------------------- */
+
+.splash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  height: 100dvh;
+  padding: 24px;
+  text-align: center;
+  color: var(--ink-2);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.splashMark {
+  width: 160px;
+}
+
+.splashTitle {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.splashLoading {
+  font-family: var(--font-display);
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  animation: rise 400ms var(--ease-out) 300ms backwards;
+}

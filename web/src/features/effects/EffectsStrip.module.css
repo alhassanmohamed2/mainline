@@ -1,0 +1,104 @@
+.strip {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 14px 11px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-l);
+  background: var(--card);
+  box-shadow: 4px 4px 0 var(--signal);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cause {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-height: 112px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.list li {
+  position: relative;
+  padding-left: 18px;
+  animation: rise 280ms var(--ease-out) backwards;
+}
+
+.list li:nth-child(2) {
+  animation-delay: 50ms;
+}
+
+.list li:nth-child(3) {
+  animation-delay: 100ms;
+}
+
+.list li:nth-child(n + 4) {
+  animation-delay: 150ms;
+}
+
+.list li::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 0.48em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink-3);
+}
+
+.list li[data-kind='worktree']::before {
+  background: var(--wd);
+}
+
+.list li[data-kind='staged']::before {
+  background: var(--staged);
+}
+
+.list li[data-kind='commit']::before,
+.list li[data-kind='ref']::before,
+.list li[data-kind='repo']::before {
+  background: var(--ink);
+}
+
+.list li[data-kind='remote']::before {
+  background: var(--remote);
+}
+
+.list li[data-kind='ghost']::before,
+.list li[data-kind='stash']::before {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--ink-3);
+}
+
+.list li[data-kind='none'] {
+  color: var(--ink-2);
+}
+
+.list li[data-kind='none']::before {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--rule);
+}
+
+.idle {
+  font-size: 13.5px;
+  color: var(--ink-3);
+}

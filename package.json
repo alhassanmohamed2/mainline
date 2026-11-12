@@ -1,0 +1,31 @@
+{
+  "name": "mainline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Learn git and GitHub by running real commands and watching the repository change.",
+  "workspaces": [
+    "shared",
+    "curriculum",
+    "server",
+    "web"
+  ],
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,web -c yellow,cyan \"npm run dev -w @mainline/server\" \"npm run dev -w @mainline/web\"",
+    "build": "npm run build -w @mainline/web",
+    "start": "npm run build && npm run start -w @mainline/server",
+    "serve": "npm run start -w @mainline/server",
+    "doctor": "node --disable-warning=ExperimentalWarning scripts/doctor.ts",
+    "verify:curriculum": "node --disable-warning=ExperimentalWarning scripts/verify-curriculum.ts",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "concurrently": "^10.0.7",
+    "typescript": "^7.0.2"
+  }
+}
