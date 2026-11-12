@@ -5,19 +5,50 @@
   transition: background-color 150ms var(--ease-out);
   user-select: none;
   touch-action: none;
-  z-index: 5;
+  z-index: 10;
 }
 
 .vertical {
-  width: 5px;
+  width: 8px;
+  height: 100%;
   cursor: col-resize;
-  margin: 0 -2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Invisible hit area expansion: 18px wide so mouse grabs it effortlessly */
+.vertical::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -5px;
+  right: -5px;
+  cursor: col-resize;
+  z-index: 2;
 }
 
 .horizontal {
-  height: 5px;
+  height: 8px;
+  width: 100%;
   cursor: row-resize;
-  margin: -2px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-s);
+}
+
+/* Invisible hit area expansion: 18px tall so mouse grabs it effortlessly */
+.horizontal::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -5px;
+  bottom: -5px;
+  cursor: row-resize;
+  z-index: 2;
 }
 
 .gutter:hover,
@@ -29,35 +60,31 @@
 
 .handle {
   position: absolute;
-  inset: 0;
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
 }
 
-.vertical .handle::after {
-  content: '';
-  width: 3px;
-  height: 24px;
+.vertical .handle {
+  width: 4px;
+  height: 36px;
   border-radius: 2px;
   background: var(--ink-3);
-  opacity: 0.7;
-  transition: opacity 120ms;
+  transition: background-color 120ms, opacity 120ms;
 }
 
-.horizontal .handle::after {
-  content: '';
-  width: 24px;
-  height: 3px;
+.horizontal .handle {
+  width: 36px;
+  height: 4px;
   border-radius: 2px;
   background: var(--ink-3);
-  opacity: 0.7;
-  transition: opacity 120ms;
+  transition: background-color 120ms, opacity 120ms;
 }
 
-.gutter:hover .handle::after,
-.gutter[data-dragging='true'] .handle::after {
+.gutter:hover .handle,
+.gutter:focus-visible .handle,
+.gutter[data-dragging='true'] .handle {
+  background: var(--ink);
   opacity: 1;
-  background: var(--on-signal);
 }

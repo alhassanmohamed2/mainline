@@ -6,43 +6,75 @@ interface ResizeGutterProps {
   onResize: (delta: number) => void;
   onReset?: () => void;
   label: string;
+  className?: string;
+  'data-gutter'?: string;
 }
 
-export function ResizeGutter({ direction = 'vertical', onResize, onReset, label }: ResizeGutterProps) {
+export function ResizeGutter({
+  direction = 'vertical',
+  onResize,
+  onReset,
+  label,
+  className,
+  'data-gutter': dataGutter,
+}: ResizeGutterProps) {
   const [dragging, setDragging] = useState(false);
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    // Only drag on primary mouse button (left-click) or touch
+    if (event.button !== 0) return;
     event.preventDefault();
-    const startCoord = direction === 'vertical' ? event.clientX : event.clientY;
-    let lastCoord = startCoord;
+    event.stopPropagation();
+
+    const target = event.currentTarget;
+    const pointerId = event.pointerId;
+
+    try {
+      target.setPointerCapture(pointerId);
+    } catch {
+      // Fallback if pointer capture unsupported
+    }
 
     setDragging(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
 
-    const onPointerMove = (moveEvent: globalThis.PointerEvent) => {
-      const currentCoord = direction === 'vertical' ? moveEvent.clientX : moveEvent.clientY;
-      const delta = currentCoord - lastCoord;
-      lastCoord = currentCoord;
-      onResize(delta);
+    const originalCursor = document.body.style.cursor;
+    const originalUserSelect = document.body.style.userSelect;
+    document.body.style.cursor = direction === 'vertical' ? 'col-resize' : 'row-resize';
+    document.body.style.userSelect = 'none';
+
+    let lastCoord = direction === 'vertical' ? event.clientX : event.clientY;
+
+    const onPointerMove = (e: globalThis.PointerEvent) => {
+      e.preventDefault();
+      const current = direction === 'vertical' ? e.clientX : e.clientY;
+      const delta = current - lastCoord;
+      if (delta !== 0) {
+        lastCoord = current;
+        onResize(delta);
+      }
     };
 
-    const onPointerUp = (upEvent: globalThis.PointerEvent) => {
+    const cleanup = (e: globalThis.PointerEvent) => {
       setDragging(false);
+      document.body.style.cursor = originalCursor;
+      document.body.style.userSelect = originalUserSelect;
       try {
-        event.currentTarget.releasePointerCapture(upEvent.pointerId);
+        target.releasePointerCapture(pointerId);
       } catch {
         // ignore
       }
       window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointerup', cleanup);
+      window.removeEventListener('pointercancel', cleanup);
     };
 
-    window.addEventListener('pointermove', onPointerMove);
-    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointermove', onPointerMove, { passive: false });
+    window.addEventListener('pointerup', cleanup);
+    window.addEventListener('pointercancel', cleanup);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const step = event.shiftKey ? 40 : 12;
+    const step = event.shiftKey ? 40 : 16;
     if (direction === 'vertical') {
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
@@ -60,20 +92,26 @@ export function ResizeGutter({ direction = 'vertical', onResize, onReset, label 
         onResize(step);
       }
     }
+
+    if (event.key === 'Enter' || event.key === ' ' || event.key === 'Escape') {
+      event.preventDefault();
+      onReset?.();
+    }
   };
 
   return (
     <div
       role="separator"
       tabIndex={0}
+      data-gutter={dataGutter}
       aria-label={label}
       aria-orientation={direction === 'vertical' ? 'vertical' : 'horizontal'}
-      className={`${styles.gutter} ${styles[direction]}`}
+      className={`${styles.gutter} ${styles[direction]} ${className ?? ''}`.trim()}
       data-dragging={dragging || undefined}
       onPointerDown={handlePointerDown}
       onDoubleClick={onReset}
       onKeyDown={handleKeyDown}
-      title={`${label}. Drag to resize, double-click to reset.`}
+      title={`${label}. Drag to resize, double-click or Enter to reset.`}
     >
       <div className={styles.handle} aria-hidden="true" />
     </div>

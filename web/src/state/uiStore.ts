@@ -56,6 +56,12 @@ interface UiState {
   setLessonWidth: (w: number) => void;
   setMapWidth: (w: number) => void;
   setTerminalHeight: (h: number) => void;
+  adjustLessonWidth: (delta: number) => void;
+  adjustMapWidth: (delta: number) => void;
+  adjustTerminalHeight: (delta: number) => void;
+  resetLessonWidth: () => void;
+  resetMapWidth: () => void;
+  resetTerminalHeight: () => void;
   resetLayoutSizes: () => void;
 }
 
@@ -108,6 +114,21 @@ export const useUiStore = create<UiState>()(
       setLessonWidth: (lessonWidth) => set({ lessonWidth }),
       setMapWidth: (mapWidth) => set({ mapWidth }),
       setTerminalHeight: (terminalHeight) => set({ terminalHeight }),
+      adjustLessonWidth: (delta) =>
+        set((state) => ({
+          lessonWidth: Math.min(650, Math.max(260, state.lessonWidth + delta)),
+        })),
+      adjustMapWidth: (delta) =>
+        set((state) => ({
+          mapWidth: Math.min(650, Math.max(260, state.mapWidth - delta)),
+        })),
+      adjustTerminalHeight: (delta) =>
+        set((state) => ({
+          terminalHeight: Math.min(600, Math.max(160, state.terminalHeight - delta)),
+        })),
+      resetLessonWidth: () => set({ lessonWidth: 370 }),
+      resetMapWidth: () => set({ mapWidth: 360 }),
+      resetTerminalHeight: () => set({ terminalHeight: 260 }),
       resetLayoutSizes: () => set({ lessonWidth: 370, mapWidth: 360, terminalHeight: 260 }),
     }),
     {

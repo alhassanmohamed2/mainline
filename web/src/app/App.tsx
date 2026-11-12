@@ -44,9 +44,12 @@ export function App() {
   const lessonWidth = useUiStore((state) => state.lessonWidth);
   const mapWidth = useUiStore((state) => state.mapWidth);
   const terminalHeight = useUiStore((state) => state.terminalHeight);
-  const setLessonWidth = useUiStore((state) => state.setLessonWidth);
-  const setMapWidth = useUiStore((state) => state.setMapWidth);
-  const setTerminalHeight = useUiStore((state) => state.setTerminalHeight);
+  const adjustLessonWidth = useUiStore((state) => state.adjustLessonWidth);
+  const adjustMapWidth = useUiStore((state) => state.adjustMapWidth);
+  const adjustTerminalHeight = useUiStore((state) => state.adjustTerminalHeight);
+  const resetLessonWidth = useUiStore((state) => state.resetLessonWidth);
+  const resetMapWidth = useUiStore((state) => state.resetMapWidth);
+  const resetTerminalHeight = useUiStore((state) => state.resetTerminalHeight);
 
   useEffect(() => {
     void boot();
@@ -153,14 +156,13 @@ export function App() {
           <div className={styles.lesson}>
             <LessonPanel />
           </div>
-          <div data-gutter="lesson">
-            <ResizeGutter
-              direction="vertical"
-              label="Resize lesson panel"
-              onResize={(delta) => setLessonWidth(Math.min(650, Math.max(260, lessonWidth + delta)))}
-              onReset={() => setLessonWidth(370)}
-            />
-          </div>
+          <ResizeGutter
+            direction="vertical"
+            data-gutter="lesson"
+            label="Resize lesson panel"
+            onResize={adjustLessonWidth}
+            onReset={resetLessonWidth}
+          />
           <div className={styles.stage}>
             <div className={styles.boardSlot}>
               <Board />
@@ -168,20 +170,21 @@ export function App() {
             <ResizeGutter
               direction="horizontal"
               label="Resize workbench panels"
-              onResize={(delta) => setTerminalHeight(Math.min(520, Math.max(160, terminalHeight - delta)))}
-              onReset={() => setTerminalHeight(260)}
+              onResize={adjustTerminalHeight}
+              onReset={resetTerminalHeight}
             />
             <EffectsStrip />
-            <Terminal />
+            <div className={styles.terminalSlot}>
+              <Terminal />
+            </div>
           </div>
-          <div data-gutter="map">
-            <ResizeGutter
-              direction="vertical"
-              label="Resize map panel"
-              onResize={(delta) => setMapWidth(Math.min(650, Math.max(260, mapWidth - delta)))}
-              onReset={() => setMapWidth(360)}
-            />
-          </div>
+          <ResizeGutter
+            direction="vertical"
+            data-gutter="map"
+            label="Resize map panel"
+            onResize={adjustMapWidth}
+            onReset={resetMapWidth}
+          />
           <div className={styles.map}>
             <MapPanel />
           </div>

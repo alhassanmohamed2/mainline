@@ -10,7 +10,7 @@
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: var(--lesson-width, 370px) auto minmax(0, 1fr) auto var(--map-width, 360px);
+  grid-template-columns: var(--lesson-width, 370px) 8px minmax(0, 1fr) 8px var(--map-width, 360px);
 }
 
 .lesson,
@@ -47,15 +47,17 @@
   border-radius: var(--radius-l);
 }
 
-/* The terminal height is adjustable by dragging the separator */
-.stage > section:last-child {
+.terminalSlot {
   flex: 0 0 var(--terminal-height, 260px);
-  min-height: 180px;
+  min-height: 160px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.stage > section:nth-child(2) {
-  flex: none;
-  margin-right: 4px;
+.terminalSlot > * {
+  flex: 1;
+  min-height: 0;
 }
 
 .offline {
@@ -107,7 +109,7 @@
 /* Two columns: the lesson stays, workbench and map take turns */
 @media (max-width: 1279px) {
   .columns {
-    grid-template-columns: minmax(320px, var(--lesson-width, 370px)) auto minmax(0, 1fr);
+    grid-template-columns: minmax(300px, var(--lesson-width, 370px)) 8px minmax(0, 1fr);
   }
 
   .columns > [data-gutter='map'] {
@@ -176,7 +178,7 @@
     overflow: visible;
   }
 
-  .stage > section:last-child {
+  .terminalSlot {
     flex: none;
     height: 380px;
   }
