@@ -57,8 +57,8 @@ export function TopBar() {
         <button
           type="button"
           className={styles.progressBadge}
-          onClick={openSearch}
-          title={`${completedSteps} of ${totalSteps} stations completed (${pct}%). Click to search curriculum.`}
+          onClick={() => openResetDialog(null)}
+          title={`${completedSteps} of ${totalSteps} stations completed (${pct}%). Click to reset progress or manage sandbox.`}
           aria-label={`Progress: ${completedSteps} of ${totalSteps} stations completed (${pct}%)`}
         >
           <div className={styles.progressRing} aria-hidden="true">

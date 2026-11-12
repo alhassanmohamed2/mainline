@@ -16,6 +16,7 @@ interface LessonState {
   markDone: (key: string, exitCode: number) => void;
   forgetChapter: (chapterId: string) => void;
   forgetAll: () => void;
+  resetAllProgress: () => void;
 }
 
 const first = chapters[0]!;
@@ -38,6 +39,14 @@ export const useLessonStore = create<LessonState>()(
           done: Object.fromEntries(Object.entries(state.done).filter(([key]) => !key.startsWith(`${chapterId}/`))),
         })),
       forgetAll: () => set({ done: {} }),
+      resetAllProgress: () => {
+        const firstChapter = chapters[0]!;
+        set({
+          chapterId: firstChapter.id,
+          stepId: firstChapter.steps[0]!.id,
+          done: {},
+        });
+      },
     }),
     {
       name: 'mainline.lesson',

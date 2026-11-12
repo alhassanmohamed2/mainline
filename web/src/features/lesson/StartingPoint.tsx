@@ -46,9 +46,14 @@ export function StartingPoint({ chapter }: { chapter: Chapter }) {
             {check.status === 'rebuild' ? 'Set up the sandbox for this chapter' : 'Rebuild this starting point'}
           </Button>
         ) : (
-          <Button size="small" icon="arrowLeft" onClick={() => openChapter('github')}>
-            Go to chapter 7
-          </Button>
+          <>
+            <Button size="small" icon="arrowLeft" onClick={() => openChapter('github')}>
+              Go to chapter 7
+            </Button>
+            <Button size="small" variant="quiet" icon="refresh" onClick={() => openResetDialog(null)}>
+              Reset or start over
+            </Button>
+          </>
         )}
       </div>
     </div>

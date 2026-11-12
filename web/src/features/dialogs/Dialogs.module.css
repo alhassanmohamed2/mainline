@@ -46,3 +46,51 @@
   font-weight: 600;
   color: var(--wd);
 }
+
+.cardOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0 6px;
+}
+
+.optionCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border-radius: var(--radius-m);
+  border: 1.5px solid var(--rule);
+  background: var(--paper);
+  transition: border-color 140ms;
+}
+
+.optionCard:hover {
+  border-color: var(--ink-3);
+}
+
+.optionCard[data-featured='true'] {
+  border-color: var(--signal);
+  background: color-mix(in srgb, var(--signal) 8%, var(--paper));
+}
+
+.optionInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.optionTitle {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.optionDesc {
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.4;
+  margin: 0;
+}
